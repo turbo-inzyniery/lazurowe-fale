@@ -1,9 +1,1 @@
 language: Java
-deploy:
-  provider: releases
-  api_key: "70b12c8b0dfff7452dd42e0be9f072687709c69e"
-  file: "target/io-project-architecture-0.1.jar"
-  skip_cleanup: true
-  on:
-    tags: true
-
