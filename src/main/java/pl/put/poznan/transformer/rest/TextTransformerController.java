@@ -3,6 +3,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.RequestModel;
 import pl.put.poznan.transformer.logic.TextTransformer;
@@ -18,7 +19,7 @@ public class TextTransformerController {
     private final ObjectMapper mapper = new ObjectMapper();
 
     @RequestMapping(value = "/{text}", method = RequestMethod.GET, produces = "application/json")
-    public String get(@PathVariable String text,
+    public ResponseEntity<String> get(@PathVariable String text,
                               @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
 
         // log the parameters
@@ -28,15 +29,17 @@ public class TextTransformerController {
         // do the transformation, you should run your logic here, below just a silly example
         TextTransformer transformer = new TextTransformer(transforms);
         try{
-            return mapper.writeValueAsString(transformer.transform(text));
+            String json = mapper.writeValueAsString(transformer.transform(text));
+            return ResponseEntity.ok(json);
         }
         catch (JsonProcessingException ex){
-            return transformer.transform(text);
+            logger.debug(ex.getMessage());
+            return ResponseEntity.status(500).body(null);
         }
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public String post(@RequestBody RequestModel model) {
+    public ResponseEntity<String> post(@RequestBody RequestModel model) {
 
         // log the parameters
         logger.debug(model.text);
@@ -45,10 +48,12 @@ public class TextTransformerController {
         // do the transformation, you should run your logic here, below just a silly example
         TextTransformer transformer = new TextTransformer(model.transforms);
         try{
-            return mapper.writeValueAsString(transformer.transform(model.text));
+            String json = mapper.writeValueAsString(transformer.transform(model.text));
+            return ResponseEntity.ok(json);
         }
         catch (JsonProcessingException ex){
-            return transformer.transform(model.text);
+            logger.debug(ex.getMessage());
+            return ResponseEntity.status(500).body(null);
         }
     }
 
