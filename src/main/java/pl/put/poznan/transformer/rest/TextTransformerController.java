@@ -1,19 +1,23 @@
 package pl.put.poznan.transformer.rest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import pl.put.poznan.transformer.logic.RequestModel;
 import pl.put.poznan.transformer.logic.TextTransformer;
 
 import java.util.Arrays;
 
 
 @RestController
-@RequestMapping("/{text}")
+@RequestMapping("/")
 public class TextTransformerController {
 
     private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
+    private final ObjectMapper mapper = new ObjectMapper();
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{text}", method = RequestMethod.GET, produces = "application/json")
     public String get(@PathVariable String text,
                               @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
 
@@ -23,20 +27,29 @@ public class TextTransformerController {
 
         // do the transformation, you should run your logic here, below just a silly example
         TextTransformer transformer = new TextTransformer(transforms);
-        return transformer.transform(text);
+        try{
+            return mapper.writeValueAsString(transformer.transform(text));
+        }
+        catch (JsonProcessingException ex){
+            return transformer.transform(text);
+        }
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public String post(@PathVariable String text,
-                      @RequestBody String[] transforms) {
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public String post(@RequestBody RequestModel model) {
 
         // log the parameters
-        logger.debug(text);
-        logger.debug(Arrays.toString(transforms));
+        logger.debug(model.text);
+        logger.debug(Arrays.toString(model.transforms));
 
         // do the transformation, you should run your logic here, below just a silly example
-        TextTransformer transformer = new TextTransformer(transforms);
-        return transformer.transform(text);
+        TextTransformer transformer = new TextTransformer(model.transforms);
+        try{
+            return mapper.writeValueAsString(transformer.transform(model.text));
+        }
+        catch (JsonProcessingException ex){
+            return transformer.transform(model.text);
+        }
     }
 
 
