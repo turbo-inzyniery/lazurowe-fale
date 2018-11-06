@@ -26,14 +26,14 @@ public class TextTransformer {
                 case "capitalize":
                                 text = Functions.Capitalize(text);
                                 break;
-                case "inverse":
-                    break;
+                case "inverse": text = Functions.inverse(text);
+                                break;
                 case "letter":
-                    break;
+                                break;
                 case "short":
-                    break;
+                                break;
                 case "long":
-                    break;
+                                break;
             }
         }
         return text;
