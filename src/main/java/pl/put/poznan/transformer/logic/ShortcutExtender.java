@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * Contains a Transform() method to replace occurences of supported shortcuts with their full meaning.
+ */
 public class ShortcutExtender {
 
     private static final Map<String, String> dic;
@@ -26,6 +29,12 @@ public class ShortcutExtender {
         dic = Collections.unmodifiableMap(hmap);
     }
 
+    /**
+     * Replaces all occurences of supported shortcuts with their full meaning, respecting capitalization.
+     *
+     * @param text text string to replace
+     * @return            text string after transformation
+     */
     public static String Transform(String text)
     {
         for ( String key : dic.keySet() ) {

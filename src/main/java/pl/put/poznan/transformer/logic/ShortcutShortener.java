@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Contains a Transform() method to replace occurences of supported words with their shortcuts.
+ */
 public class ShortcutShortener {
 
     private static final Map<String, String> dic;
@@ -24,6 +27,13 @@ public class ShortcutShortener {
         dic = Collections.unmodifiableMap(hmap);
     }
 
+
+    /**
+     * Replaces all occurences of supported words with their shortcuts, respecting capitalization.
+     *
+     * @param text text string to replace
+     * @return            text string after transformation
+     */
     public static String Transform(String text)
     {
         for ( String key : dic.keySet() ) {
