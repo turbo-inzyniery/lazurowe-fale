@@ -5,9 +5,22 @@ import org.apache.tomcat.util.buf.StringUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pl.put.poznan.transformer.rest.TextTransformerController;
 
+/**
+ * This class contains methods transforming numbers to words
+ */
 public class NumberToWord {
 
+    private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
+
+    /**
+     * This method checks if the string is a number
+     * @param str - checking string
+     * @return true if that string is a number
+     */
     private static boolean isNumeric(String str)
     {
         for (char c : str.toCharArray())
@@ -17,6 +30,12 @@ public class NumberToWord {
         return true;
     }
 
+    /**
+     * This method changes all numbers from range 0-1000 to words in polish language (for example 654 -> sześćset pięćdziesiąt cztery).
+     * It works for floating points numbers too (for example 12.34 -> dwanaście i trzydzieści cztery) Attention - use dot separator
+     * @param str - text to transform
+     * @return transformed text
+     */
     private static String toNum(String str){
 
         List<String> result = new ArrayList<String>();
@@ -113,6 +132,11 @@ public class NumberToWord {
     }
 
 
+    /**
+     * This method splits string, goes through all parts and after checking if it is integer number or floating point number transforms it to word.
+     * @param text - transforming string
+     * @return transformed string
+     */
     public static String transform(String text){
 
         /* find numbers */
@@ -124,9 +148,7 @@ public class NumberToWord {
         for(int i = 0; i<=parts.length-1; i++){
 
             String[] subparts = parts[i].split("\\.");
-
-            System.out.println(subparts.length);
-
+            
             if (subparts.length == 2 && isNumeric(subparts[0]) && isNumeric(subparts[1])) {
 
                   boolean fl = false;
