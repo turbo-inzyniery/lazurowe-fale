@@ -37,7 +37,9 @@ public class ShortcutShortener {
     public static String Transform(String text)
     {
         for ( String key : dic.keySet() ) {
-            text = text.replaceAll(key, dic.get(key));
+            text = text.replaceAll("^"+key+"\\s" , dic.get(key)+" ");
+            text = text.replaceAll("\\s"+key+"$", " "+dic.get(key));
+            text = text.replaceAll("\\s"+key+"\\s", " "+dic.get(key)+" ");
         }
         return text;
     }
