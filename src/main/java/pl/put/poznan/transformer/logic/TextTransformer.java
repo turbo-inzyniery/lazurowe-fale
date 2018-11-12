@@ -1,22 +1,26 @@
 package pl.put.poznan.transformer.logic;
 
 /**
- * This is just an example to show that the logic should be outside the REST service.
+ * Can apply tranforms to given text
  */
 public class TextTransformer {
 
     private final String[] transforms;
 
+    /**
+     * Creates instance with transforms to apply
+     * @param transforms array of transforms to apply on text
+     */
     public TextTransformer(String[] transforms){
         this.transforms = transforms;
     }
 
-    public String transform(String text) {
-        // of course normally it would to something based on transforms
-        return text.toUpperCase();
-    }
-
-    public String choose_transformation(String text){
+    /**
+     * Applies transforms given in constructor to text
+     * @param text text to transform
+     * @return text after transforms
+     */
+    public String applyTransformations(String text){
         for(String operation : this.transforms){
             switch(operation){
                 case "upper":   text = text.toUpperCase();

@@ -1,6 +1,16 @@
 package pl.put.poznan.transformer.logic;
 
+/**
+ * Contains methods to capitalize and inverse string
+ */
 public class Functions {
+
+    /**
+     * Capitalizes text
+     *
+     * @param text text string to capitalize
+     * @return text string after capitalize
+     */
     public static String Capitalize(String text){
         String[] string_tab= text.split(" ");
         text = "";
@@ -14,6 +24,13 @@ public class Functions {
         }
         return text;
     }
+
+    /**
+     * Inverses text
+     *
+     * @param text text string to inverse
+     * @return text string after inverse
+     */
     public static String inverse(String text){
         char[] char_array = text.toCharArray();
         boolean [] upper_signature;
