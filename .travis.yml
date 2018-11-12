@@ -1,1 +1,12 @@
-language: Java
+language: java
+before_deploy:
+  - "mvn -DskipTests package"
+  - export LAZUROWE_FALE_JAR=$(ls target/lazurowe-fale-*.jar)
+deploy:
+  provider: releases
+  api_key:
+    secure: "tkDMClAApyN2diECD2yrEjq+gWQTGd3IXCUAXT/MEBuhfS8fOk5HgozqWBb2o65WwGwBSPP18MpN8uAFnJV3fAz1klHErH2MsaD2QuHbXn8rxiun071dDdG0OsgCYmHE0DvxD8gYHi3iUXz5iXrveFEOGQzZ/SHkRvynXBYirld1smSx3ncUKLZx6arw8WI37TX1stlQG9BppT3ip/Z8OilHUkhYafN2xTeHR/RRhxivm6heiTN6n2EUTx4R+E5oBX0D+CvRoi8VXF6Y0z5slYmkBzAhqLVkqZ2XjiKecASNIvEyFSUVtbftHZ2KkXSfABTVqFj8wreNnzeVC9v7BYIbQOWKmOAqmA/PYYpSK/0aXvs58oVwRBGLbG16HGM7t8n6Tb/gEioFYRWHAThusvKEarxlykJi65deXruoFHMM67c07gjtW/YbAegVcX98bOQLayX/04Cxt6SBbVRDAR+L/PS1NRLyJHNzNrS+N65Y6LUo/PqRJ7y3yZAV/cCEM1Lg+XZCj0iSn/nm+zZ6WEXpA/MDVLo1QvlahRxJAn9mVEyh7GbXxaMhUAgmVLaZCdPp4ei3AgfG68KrBtReq+fzLSJ4dPftk78kzMvwZioQvUxjSlLHfV1hY3QsBnR7tVSlvJBASSAKkpfG1y8uKl8dsBH5M9GI+xvF9V3sZgQ="
+  file: "${LAZUROWE_FALE_JAR}"
+  skip_cleanup: true
+  on:
+    tags: true

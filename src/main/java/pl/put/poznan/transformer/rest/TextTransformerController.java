@@ -29,7 +29,7 @@ public class TextTransformerController {
         // do the transformation, you should run your logic here, below just a silly example
         TextTransformer transformer = new TextTransformer(transforms);
         try{
-            String json = mapper.writeValueAsString(transformer.transform(text));
+            String json = mapper.writeValueAsString(transformer.choose_transformation(text));
             return ResponseEntity.ok(json);
         }
         catch (JsonProcessingException ex){
@@ -48,7 +48,7 @@ public class TextTransformerController {
         // do the transformation, you should run your logic here, below just a silly example
         TextTransformer transformer = new TextTransformer(model.transforms);
         try{
-            String json = mapper.writeValueAsString(transformer.transform(model.text));
+            String json = mapper.writeValueAsString(transformer.choose_transformation(model.text));
             return ResponseEntity.ok(json);
         }
         catch (JsonProcessingException ex){
