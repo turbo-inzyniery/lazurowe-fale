@@ -4,35 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains methods to capitalize and inverse string
+ * Inverser is responsible for decorating Transformer with inverse operation
  */
-public class Functions {
-
-    /**
-     * Capitalizes text
-     *
-     * @param text text string to capitalize
-     * @return text string after capitalize
-     */
-    public static String Capitalize(String text){
-        String[] string_tab= text.split(" ");
-        text = "";
-        for(String text_fragment : string_tab){
-            if (text_fragment.length() > 0) {
-                text_fragment = text_fragment.substring(0, 1).toUpperCase() + text_fragment.substring(1);
-                text += text_fragment + " ";
-            }
-        }
-        return text;
+public class Inverser extends TransformerDecorator {
+    public Inverser(Transformer transformer) {
+        super(transformer);
     }
 
     /**
      * Inverses text keeping upper cases at original position
      *
-     * @param text text string to inverse
      * @return text string after inverse
      */
-    public static String inverse(String text){
+    @Override
+    public String transform() {
+        String text = super.transform();
+
         List<Integer> codePoints = new ArrayList<>();
         text.codePoints().forEach(point -> codePoints.add(point));
 

@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Contains a Transform() method to replace occurences of supported shortcuts with their full meaning.
  */
-public class ShortcutExtender {
+public class ShortcutExtender extends TransformerDecorator {
 
     private static final Map<String, String> dic;
     static {
@@ -29,14 +29,19 @@ public class ShortcutExtender {
         dic = Collections.unmodifiableMap(hmap);
     }
 
+    public ShortcutExtender(Transformer transformer) {
+        super(transformer);
+    }
+
     /**
      * Replaces all occurences of supported shortcuts with their full meaning, respecting capitalization.
      *
-     * @param text text string to replace
-     * @return            text string after transformation
+     * @return text string after transformation
      */
-    public static String Transform(String text)
+    @Override
+    public String transform()
     {
+        String text = super.transform();
         for ( String key : dic.keySet() ) {
             text = text.replaceAll("^"+key+"\\s" , dic.get(key)+" ");
             text = text.replaceAll("\\s"+key+"$", " "+dic.get(key));

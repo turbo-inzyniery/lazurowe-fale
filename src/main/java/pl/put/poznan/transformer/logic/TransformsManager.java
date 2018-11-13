@@ -7,16 +7,16 @@ import org.slf4j.LoggerFactory;
 /**
  * Can apply tranforms to given text
  */
-public class TextTransformer {
+public class TransformsManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(TextTransformer.class);
+    private static final Logger logger = LoggerFactory.getLogger(TransformsManager.class);
     private final String[] transforms;
 
     /**
      * Creates instance with transforms to apply
      * @param transforms array of transforms to apply on text
      */
-    public TextTransformer(String[] transforms){
+    public TransformsManager(String[] transforms){
         this.transforms = transforms;
     }
 
@@ -32,32 +32,35 @@ public class TextTransformer {
              transforms) {
             logger.debug(transform);
         }
+
+        Transformer transformer = new BaseTransformer(text);
         for(String operation : this.transforms){
             switch(operation){
                 case "upper":
-                    text = text.toUpperCase();
+                    transformer = new UpperCaseTransformer(transformer);
                     break;
                 case "lower":
-                    text = text.toLowerCase();
+                    transformer = new LowerCaseTransformer(transformer);
                     break;
                 case "capitalize":
-                    text = Functions.Capitalize(text);
+                    transformer = new Capitalizer(transformer);
                     break;
                 case "inverse":
-                    text = Functions.inverse(text);
+                    transformer = new Inverser(transformer);
                     break;
                 case "extend":
-                    text = ShortcutExtender.Transform(text);
+                    transformer = new ShortcutExtender(transformer);
                     break;
                 case "shorten":
-                    text = ShortcutShortener.Transform(text);
+                    transformer = new ShortcutShortener(transformer);
                     break;
                 case "numberToWord":
-                    text = NumberToWord.transform(text);
+                    transformer = new NumberToWord(transformer);
                     break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
         }
+        text = transformer.transform();
         logger.info("Returned text after transforms: "+text);
         return text;
     }

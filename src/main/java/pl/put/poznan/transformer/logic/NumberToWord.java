@@ -12,16 +12,18 @@ import pl.put.poznan.transformer.rest.TextTransformerController;
 /**
  * This class contains methods transforming numbers to words
  */
-public class NumberToWord {
+public class NumberToWord extends TransformerDecorator{
 
-    private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
+    public NumberToWord(Transformer transformer) {
+        super(transformer);
+    }
 
     /**
      * This method checks if the string is a number
      * @param str - checking string
      * @return true if that string is a number
      */
-    private static boolean isNumeric(String str)
+    private boolean isNumeric(String str)
     {
         for (char c : str.toCharArray())
         {
@@ -36,7 +38,7 @@ public class NumberToWord {
      * @param str - text to transform
      * @return transformed text
      */
-    private static String toNum(String str){
+    private String toNum(String str){
 
         List<String> result = new ArrayList<String>();
 
@@ -134,10 +136,12 @@ public class NumberToWord {
 
     /**
      * This method splits string, goes through all parts and after checking if it is integer number or floating point number transforms it to word.
-     * @param text - transforming string
+     *
      * @return transformed string
      */
-    public static String transform(String text){
+    @Override
+    public String transform(){
+        String text = super.transform();
 
         /* find numbers */
 
