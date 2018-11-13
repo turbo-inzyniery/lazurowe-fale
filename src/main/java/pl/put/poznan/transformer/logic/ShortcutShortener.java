@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Contains a Transform() method to replace occurences of supported words with their shortcuts.
  */
-public class ShortcutShortener {
+public class ShortcutShortener extends TransformerDecorator {
 
     private static final Map<String, String> dic;
     static {
@@ -27,15 +27,20 @@ public class ShortcutShortener {
         dic = Collections.unmodifiableMap(hmap);
     }
 
+    public ShortcutShortener(Transformer transformer) {
+        super(transformer);
+    }
+
 
     /**
      * Replaces all occurences of supported words with their shortcuts, respecting capitalization.
      *
-     * @param text text string to replace
-     * @return            text string after transformation
+     * @return text string after transformation
      */
-    public static String Transform(String text)
+    @Override
+    public String transform()
     {
+        String text = super.transform();
         for ( String key : dic.keySet() ) {
             text = text.replaceAll("^"+key+"\\s" , dic.get(key)+" ");
             text = text.replaceAll("\\s"+key+"$", " "+dic.get(key));

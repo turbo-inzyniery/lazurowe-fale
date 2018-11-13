@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.RequestModel;
-import pl.put.poznan.transformer.logic.TextTransformer;
+import pl.put.poznan.transformer.logic.TransformsManager;
 
 import java.util.Arrays;
 
@@ -27,9 +27,9 @@ public class TextTransformerController {
         logger.debug(Arrays.toString(transforms));
 
         // do the transformation, you should run your logic here, below just a silly example
-        TextTransformer transformer = new TextTransformer(transforms);
+        TransformsManager transformsManager = new TransformsManager(transforms);
         try{
-            String json = mapper.writeValueAsString(transformer.applyTransformations(text));
+            String json = mapper.writeValueAsString(transformsManager.applyTransformations(text));
             return ResponseEntity.ok(json);
         }
         catch (JsonProcessingException ex){
@@ -46,9 +46,9 @@ public class TextTransformerController {
         logger.debug(Arrays.toString(model.transforms));
 
         // do the transformation, you should run your logic here, below just a silly example
-        TextTransformer transformer = new TextTransformer(model.transforms);
+        TransformsManager transformsManager = new TransformsManager(model.transforms);
         try{
-            String json = mapper.writeValueAsString(transformer.applyTransformations(model.text));
+            String json = mapper.writeValueAsString(transformsManager.applyTransformations(model.text));
             return ResponseEntity.ok(json);
         }
         catch (JsonProcessingException ex){
