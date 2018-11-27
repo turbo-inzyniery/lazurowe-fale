@@ -38,6 +38,7 @@ public class TextTransformerController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:5000")
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> post(@RequestBody RequestModel model) {
 
