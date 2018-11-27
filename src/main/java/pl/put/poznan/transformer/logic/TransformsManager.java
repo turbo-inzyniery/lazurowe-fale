@@ -66,6 +66,9 @@ public class TransformsManager {
                 case "pokemon":
                     transformer = new PokemonTransformer(transformer);
                     break;
+                case "unicode":
+                    transformer = new Unicode(transformer);
+                    break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
         }
