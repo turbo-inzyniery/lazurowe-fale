@@ -60,6 +60,9 @@ public class TransformsManager {
                 case "inverseSenence":
                     transformer = new SentenceInverser(transformer);
                     break;
+                case "latexTransformer":
+                    transformer = new LatexTransformer(transformer);
+                    break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
         }
