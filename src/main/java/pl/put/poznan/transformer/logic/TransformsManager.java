@@ -57,6 +57,9 @@ public class TransformsManager {
                 case "numberToWord":
                     transformer = new NumberToWord(transformer);
                     break;
+                case "removeReplic":
+                    transformer = new ReplicRemoval(transformer);
+                    break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
         }
