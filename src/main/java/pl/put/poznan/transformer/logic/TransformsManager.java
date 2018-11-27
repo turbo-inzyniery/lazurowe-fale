@@ -65,6 +65,7 @@ public class TransformsManager {
                     break;
                 case "pokemon":
                     transformer = new PokemonTransformer(transformer);
+                    break;
                 case "removeReplic":
                     transformer = new ReplicRemoval(transformer);
                     break;
