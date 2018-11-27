@@ -56,7 +56,8 @@ public class TransformsManager {
                     break;
                 case "numberToWord":
                     transformer = new NumberToWord(transformer);
-                    break;
+                case "removeInterpunction":
+                    transformer = new InterpunctionRemover(transformer);
             }
             logger.debug("Text after transform '"+operation+"': "+text);
         }
