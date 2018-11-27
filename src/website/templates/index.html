@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script>
+        function removeElement(id) {
+            document.getElementById(id).remove();
+        }
+        function addTransform() {
+            let value = select.selectedOptions[0].text;
+            let d = document.createElement("div");
+            d.id = "div" + index++;
+            let p = document.createElement("p");
+            let node = document.createTextNode(value);
+            let b = document.createElement("button");
+            b.innerText = "usuń przekształcenie";
+            b.type = "button";
+            b.onclick = function(){ removeElement(d.id); };
+            let i = document.createElement("input");
+            i.type = "hidden";
+            i.classList.add("transform");
+            i.value = select.selectedOptions[0].value;
+            p.appendChild(node);
+            d.appendChild(p);
+            d.appendChild(b);
+            d.appendChild(i);
+            transformsDiv.appendChild(d);
+        }
+        function sendRequest() {
+            data.text = text.value;
+            const transforms = $(".transform");
+            data.transforms = [];
+            for (let i = 0; i < transforms.length; i++){
+                data.transforms.push(transforms[i].value);
+            }
+            $.ajax({
+                url:"http://localhost:8080",
+                method:"POST",
+                data:JSON.stringify(data),
+                headers: {'Content-Type':'application/json'},
+                success: function(data){
+                    lel.innerHTML=data;
+                },
+                error: function () {
+                    alert("wystąpił błąd");
+                }});
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>Lazurowe fale</title>
+</head>
+<body>
+<select id="some_select">
+    <option value="upper">
+        wielkie litery
+    </option>
+    <option value="lower">
+        małe litery
+    </option>
+    <option value="capitalize">
+        kapitalizacja
+    </option>
+    <option value="inverse">
+        odwrócenie z zachowaniem wielkości liter
+    </option>
+    <option value="extend">
+        rozszerzenie skrótów
+    </option>
+    <option value="shorten">
+        skrócenie do skrótów
+    </option>
+    <option value="numberToWord">
+        liczby do słów
+    </option>
+    <option value="inverseSentence">
+        odwrócenie wyrazów
+    </option>
+    <option value="pokemon">
+        tekst pokemonowy
+    </option>
+    <option value="latexTransformer">
+        wsparcie latexa
+    </option>
+    <option value="removeReplic">
+        usunięcie powtarzających się wyrazów
+    </option>
+</select>
+<button type="button" onclick="addTransform()">dodaj przekształcenie</button>
+<div id="transforms">
+</div>
+<br><br>
+Tekst do przekształcenia:
+<br>
+<textarea id="textarea" cols="40" rows="10"></textarea>
+<br>
+<button type="button" onclick="sendRequest()">przekształć tekst</button>
+<br>
+Tekst po przekształceniu:
+<br>
+<textarea id="lel" cols="40" rows="10"></textarea>
+<script>
+    const lel = document.getElementById("lel");
+    let data = {
+        "text": "uszanowanko panie premierze",
+        "transforms": ["upper"]
+    };
+    let index = 0;
+    const select = document.getElementById("some_select");
+    const transformsDiv = document.getElementById("transforms");
+    const text = document.getElementById("textarea");
+</script>
+</body>
+</html>

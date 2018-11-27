@@ -69,6 +69,9 @@ public class TransformsManager {
                 case "unicode":
                     transformer = new Unicode(transformer);
                     break;
+                case "removeReplic":
+                    transformer = new ReplicRemoval(transformer);
+                    break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
         }
