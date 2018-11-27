@@ -57,6 +57,9 @@ public class TransformsManager {
                 case "numberToWord":
                     transformer = new NumberToWord(transformer);
                     break;
+                case "pokemon":
+                    transformer = new PokemonTransformer(transformer);
+                    break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
         }
