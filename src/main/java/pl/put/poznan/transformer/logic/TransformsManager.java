@@ -57,8 +57,11 @@ public class TransformsManager {
                 case "numberToWord":
                     transformer = new NumberToWord(transformer);
                     break;
-                case "inverseSenence":
+                case "inverseSentence":
                     transformer = new SentenceInverser(transformer);
+                    break;
+                case "pokemon":
+                    transformer = new PokemonTransformer(transformer);
                     break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
