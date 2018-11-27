@@ -65,6 +65,8 @@ public class TransformsManager {
                     break;
                 case "pokemon":
                     transformer = new PokemonTransformer(transformer);
+                case "removeReplic":
+                    transformer = new ReplicRemoval(transformer);
                     break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
