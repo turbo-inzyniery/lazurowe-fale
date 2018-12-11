@@ -56,6 +56,9 @@ public class TransformsManager {
                     break;
                 case "numberToWord":
                     transformer = new NumberToWord(transformer);
+					break;
+                case "removeInterpunction":
+                    transformer = new InterpunctionRemover(transformer);
                     break;
                 case "inverseSentence":
                     transformer = new SentenceInverser(transformer);
