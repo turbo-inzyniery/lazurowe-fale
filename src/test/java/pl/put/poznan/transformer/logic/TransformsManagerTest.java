@@ -15,11 +15,11 @@ public class TransformsManagerTest {
     private TransformsManager manager = null;
 
     @Mock
-    private static Transformer transformerMock;
-    private static TransformerFactory factoryMock;
+    private Transformer transformerMock;
+    private TransformerFactory factoryMock;
 
-    @BeforeClass
-    public static void globalSetUp()
+    @Before
+    public void globalSetUp()
     {
         transformerMock = mock(Transformer.class);
         when(transformerMock.transform()).thenReturn("test");
@@ -42,36 +42,88 @@ public class TransformsManagerTest {
 
     }
 
-    @Before
-    public void setUp1(){
+    @Test //single invocation #1
+    public void TransformTest1(){
         String[] t = new String[] {"capitalize"};
         manager = new TransformsManager(t, factoryMock);
-    }
 
-    @Test
-    public void TransformTest1(){
         manager.applyTransformations("test");
+
         verify(factoryMock, times(1)).CreateCapitalizer(any());
     }
 
-
-    @Before
-    public void setUp2(){
-        String[] t = new String[] {"capitalize", "inverse"};
+    @Test //single invocation #2
+    public void TransformTest2(){
+        String[] t = new String[] {"numberToWord"};
         manager = new TransformsManager(t, factoryMock);
+
+        manager.applyTransformations("test");
+
+        verify(factoryMock, times(1)).CreateNumberToWord(any());
     }
 
-    @Test
-    public void TransformTest2(){
+    @Test //single invocation #3
+    public void TransformTest3(){
+        String[] t = new String[] {"unicode"};
+        manager = new TransformsManager(t, factoryMock);
+
+        manager.applyTransformations("test");
+
+        verify(factoryMock, times(1)).CreateUnicode(any());
+    }
+
+
+    @Test //sequence of invocations #1
+    public void TransformTest4(){
+        String[] t = new String[] {"capitalize", "inverse"};
+        manager = new TransformsManager(t, factoryMock);
+
         manager.applyTransformations("test");
 
         verify(factoryMock, times(1)).CreateCapitalizer(any());
         verify(factoryMock, times(1)).CreateInverser(any());
 
-        /*InOrder inOrder = inOrder(factoryMock);
+
+        InOrder inOrder = inOrder(factoryMock);
         inOrder.verify(factoryMock).CreateBaseTransformer(any());
         inOrder.verify(factoryMock).CreateCapitalizer(any());
-        inOrder.verify(factoryMock).CreateInverser(any());*/
+        inOrder.verify(factoryMock).CreateInverser(any());
+    }
+
+    @Test //sequence of invocations #2
+    public void TransformTest5(){
+        String[] t = new String[] {"shorten", "removeInterpunction", "inverseSentence"};
+        manager = new TransformsManager(t, factoryMock);
+
+        manager.applyTransformations("test");
+
+        verify(factoryMock, times(1)).CreateShortcutShortener(any());
+        verify(factoryMock, times(1)).CreateremoveInterpunction(any());
+        verify(factoryMock, times(1)).CreateSentenceInverser(any());
+
+
+        InOrder inOrder = inOrder(factoryMock);
+        inOrder.verify(factoryMock).CreateShortcutShortener(any());
+        inOrder.verify(factoryMock).CreateremoveInterpunction(any());
+        inOrder.verify(factoryMock).CreateSentenceInverser(any());
+    }
+
+    @Test //sequence of invocations #3
+    public void TransformTest6(){
+        String[] t = new String[] {"pokemon", "lower", "removeReplic"};
+        manager = new TransformsManager(t, factoryMock);
+
+        manager.applyTransformations("test");
+
+        verify(factoryMock, times(1)).CreatePokemonTransformer(any());
+        verify(factoryMock, times(1)).CreateLowerCaseTransformer(any());
+        verify(factoryMock, times(1)).CreateReplicRemoval(any());
+
+
+        InOrder inOrder = inOrder(factoryMock);
+        inOrder.verify(factoryMock).CreatePokemonTransformer(any());
+        inOrder.verify(factoryMock).CreateLowerCaseTransformer(any());
+        inOrder.verify(factoryMock).CreateReplicRemoval(any());
     }
 
 }
