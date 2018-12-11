@@ -1,9 +1,6 @@
 package pl.put.poznan.transformer.logic;
 
 import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class LatexTransformerTest {
     static Transformer transformer;
@@ -16,8 +13,4 @@ public class LatexTransformerTest {
         text = transformer.transform();
     }
 
-    @Test
-    public void transform1() {
-        assertEquals(" & & ", text );
-    }
 }

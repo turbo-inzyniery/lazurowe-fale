@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.RequestModel;
+import pl.put.poznan.transformer.logic.TransformerFactory;
 import pl.put.poznan.transformer.logic.TransformsManager;
 
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class TextTransformerController {
         logger.debug(Arrays.toString(transforms));
 
         // do the transformation, you should run your logic here, below just a silly example
-        TransformsManager transformsManager = new TransformsManager(transforms);
+        TransformsManager transformsManager = new TransformsManager(transforms, new TransformerFactory());
         try{
             String json = mapper.writeValueAsString(transformsManager.applyTransformations(text));
             return ResponseEntity.ok(json);
@@ -47,7 +48,7 @@ public class TextTransformerController {
         logger.debug(Arrays.toString(model.transforms));
 
         // do the transformation, you should run your logic here, below just a silly example
-        TransformsManager transformsManager = new TransformsManager(model.transforms);
+        TransformsManager transformsManager = new TransformsManager(model.transforms, new TransformerFactory());
         try{
             String json = mapper.writeValueAsString(transformsManager.applyTransformations(model.text));
             return ResponseEntity.ok(json);

@@ -11,13 +11,15 @@ public class TransformsManager {
 
     private static final Logger logger = LoggerFactory.getLogger(TransformsManager.class);
     private final String[] transforms;
+    private TransformerFactory factory;
 
     /**
      * Creates instance with transforms to apply
      * @param transforms array of transforms to apply on text
      */
-    public TransformsManager(String[] transforms){
+    public TransformsManager(String[] transforms, TransformerFactory factory){
         this.transforms = transforms;
+        this.factory = factory;
     }
 
     /**
@@ -33,44 +35,44 @@ public class TransformsManager {
             logger.debug(transform);
         }
 
-        Transformer transformer = new BaseTransformer(text);
+        Transformer transformer = factory.CreateBaseTransformer(text);
         for(String operation : this.transforms){
             switch(operation){
                 case "upper":
-                    transformer = new UpperCaseTransformer(transformer);
+                    transformer = factory.CreateUpperCaseTransformer(transformer);
                     break;
                 case "lower":
-                    transformer = new LowerCaseTransformer(transformer);
+                    transformer = factory.CreateLowerCaseTransformer(transformer);
                     break;
                 case "capitalize":
-                    transformer = new Capitalizer(transformer);
+                    transformer = factory.CreateCapitalizer(transformer);
                     break;
                 case "inverse":
-                    transformer = new Inverser(transformer);
+                    transformer = factory.CreateInverser(transformer);
                     break;
                 case "extend":
-                    transformer = new ShortcutExtender(transformer);
+                    transformer = factory.CreateShortcutExtender(transformer);
                     break;
                 case "shorten":
-                    transformer = new ShortcutShortener(transformer);
+                    transformer = factory.CreateShortcutShortener(transformer);
                     break;
                 case "numberToWord":
-                    transformer = new NumberToWord(transformer);
+                    transformer = factory.CreateNumberToWord(transformer);
                     break;
                 case "inverseSentence":
-                    transformer = new SentenceInverser(transformer);
+                    transformer = factory.CreateSentenceInverser(transformer);
                     break;
                 case "latexTransformer":
-                    transformer = new LatexTransformer(transformer);
+                    transformer = factory.CreateLatexTransformer(transformer);
                     break;
                 case "pokemon":
-                    transformer = new PokemonTransformer(transformer);
+                    transformer = factory.CreatePokemonTransformer(transformer);
                     break;
                 case "unicode":
-                    transformer = new Unicode(transformer);
+                    transformer = factory.CreateUnicode(transformer);
                     break;
                 case "removeReplic":
-                    transformer = new ReplicRemoval(transformer);
+                    transformer = factory.CreateReplicRemoval(transformer);
                     break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
