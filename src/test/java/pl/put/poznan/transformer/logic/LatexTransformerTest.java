@@ -1,7 +1,7 @@
 package pl.put.poznan.transformer.logic;
 import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 public class LatexTransformerTest {
     static Transformer transformer;
