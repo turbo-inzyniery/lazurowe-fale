@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ReplicRemovalTest {
+public class ReplicRemovalTest {
     static Transformer transformer;
     static String text;
 
