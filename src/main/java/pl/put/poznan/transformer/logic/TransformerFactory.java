@@ -66,4 +66,9 @@ public class TransformerFactory {
     {
         return new ReplicRemoval(transformer);
     }
+
+    public Transformer CreateremoveInterpunction(Transformer transformer)
+    {
+        return new InterpunctionRemover(transformer);
+    }
 }
