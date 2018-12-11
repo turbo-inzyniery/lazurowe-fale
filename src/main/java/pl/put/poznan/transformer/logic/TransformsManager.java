@@ -56,8 +56,25 @@ public class TransformsManager {
                     break;
                 case "numberToWord":
                     transformer = new NumberToWord(transformer);
+					break;
                 case "removeInterpunction":
                     transformer = new InterpunctionRemover(transformer);
+                    break;
+                case "inverseSentence":
+                    transformer = new SentenceInverser(transformer);
+                    break;
+                case "latexTransformer":
+                    transformer = new LatexTransformer(transformer);
+                    break;
+                case "pokemon":
+                    transformer = new PokemonTransformer(transformer);
+                    break;
+                case "unicode":
+                    transformer = new Unicode(transformer);
+                    break;
+                case "removeReplic":
+                    transformer = new ReplicRemoval(transformer);
+                    break;
             }
             logger.debug("Text after transform '"+operation+"': "+text);
         }
