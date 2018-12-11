@@ -42,7 +42,15 @@ public class TextTransformerController {
     @CrossOrigin(origins = "http://localhost:5000")
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> post(@RequestBody RequestModel model) {
-
+        if(model == null){
+            return ResponseEntity.status(400).body("Malformed input JSON");
+        }
+        if(model.text == null){
+            return ResponseEntity.status(400).body("Malformed text field in JSON");
+        }
+        if(model.transforms == null){
+            return ResponseEntity.status(400).body("Malformed transforms field in JSON");
+        }
         // log the parameters
         logger.debug(model.text);
         logger.debug(Arrays.toString(model.transforms));
