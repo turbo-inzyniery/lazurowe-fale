@@ -58,6 +58,9 @@ public class TransformsManager {
                     break;
                 case "numberToWord":
                     transformer = factory.CreateNumberToWord(transformer);
+					break;
+                case "removeInterpunction":
+                    transformer = factory.CreateremoveInterpunction(transformer);
                     break;
                 case "inverseSentence":
                     transformer = factory.CreateSentenceInverser(transformer);
