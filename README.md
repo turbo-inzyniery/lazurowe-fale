@@ -12,9 +12,13 @@ Developer: 132312 - invalidcorgi
 
 ### Testy wydajnościowe:  
 ![Plik z definicją testu](src/test/HTTP%20Request.jmx)  
-Test polegał na wysłaniu do API 10000 zapytań z tekstem o długości 110 znaków i zleceniem 3 transformacji.
-Przez większość czasu API odpowiadało na zapytania szybciej niż JMeter był w stanie je generować.
-W momentach gdy API się zapychało czas odpowiedzi nie przekraczał 2 sekund.
+Przeprowadzony test dotyczył nagłego dużego obciążenia API.
+Założyliśmy, że dużym nagłym ruchem jest wykonanie 10000 zapytań w ciągu sekundy.
+Chcieliśmy, aby maksymalnie 10% zapytań przekroczyło 2 sekundy czasu odpowiedzi.
+Nie dopuszczaliśmy do sytuacji gdy API przestaje odpowiadać przy takim obciążeniu.
+Test polegał na wysłaniu do API 10000 zapytań w ciągu sekundy z tekstem o długości 110 znaków i zleceniem 3 transformacji.
+Okazało się, że JMeter nie jest w stanie wysłać tylu zapytań w ciągu sekundy, być może nie pozwalał już na to interfejs sieciowy.
+W ciągu sekundy było wykonywane około 700 zapytań, wszystkie zapytania zostały obsłużone poprawnie i czas odpowiedzi nie przekroczył sekundy.
 
 ### JavaDoc
 Javadoc w formie strony internetowej jest spakowany w ![pliku](site.zip).
